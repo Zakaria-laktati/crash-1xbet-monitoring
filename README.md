@@ -461,7 +461,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 Zakaria Laktati
 
-Project Link: [https://github.com/YOUR_USERNAME/crash-1xbet-monitoring](https://github.com/YOUR_USERNAME/crash-1xbet-monitoring)
+Project Link: [https://github.com/zakaria-laktati/crash-1xbet-monitoring](https://github.com/zakaria-laktati/crash-1xbet-monitoring)
 
 ---
 
