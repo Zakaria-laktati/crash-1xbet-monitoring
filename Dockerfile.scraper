@@ -1,0 +1,42 @@
+# Dockerfile pour le Scraper 1xBet Crash
+FROM python:3.11-slim
+
+LABEL maintainer="1xBet Crash Monitoring"
+LABEL description="Scraper temps réel pour 1xBet Crash"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Répertoire de travail
+WORKDIR /app
+
+# Installer les dépendances système
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    gcc \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copier les requirements
+COPY requirements.txt .
+
+# Installer les dépendances Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copier le code source
+COPY run_scraper.py .
+COPY utils/ ./utils/
+COPY config/ ./config/
+
+# Créer le répertoire logs
+RUN mkdir -p /app/logs
+
+# Healthcheck pour vérifier que le scraper fonctionne
+HEALTHCHECK --interval=60s --timeout=10s --start-period=30s --retries=3 \
+    CMD python -c "import psycopg2; import os; conn = psycopg2.connect(host=os.getenv('DATABASE_HOST', 'localhost'), port=os.getenv('DATABASE_PORT', '5432'), database=os.getenv('DATABASE_NAME', 'crash_db'), user=os.getenv('DATABASE_USER', 'crash_user'), password=os.getenv('DATABASE_PASSWORD', 'crash_password_2025')); cur = conn.cursor(); cur.execute('SELECT COUNT(*) FROM crash_games WHERE timestamp >= NOW() - INTERVAL \\'5 minutes\\''); result = cur.fetchone()[0]; conn.close(); exit(0 if result > 0 else 1)" || exit 1
+
+# Lancer le scraper
+CMD ["python", "-u", "run_scraper.py"]

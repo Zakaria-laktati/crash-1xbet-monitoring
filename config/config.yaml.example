@@ -1,0 +1,36 @@
+authentication:
+  user_token: VOTRE_USER_TOKEN_ICI
+  session: VOTRE_SESSION_ID_ICI
+  access_token: VOTRE_ACCESS_TOKEN_ICI
+  account_id: VOTRE_ACCOUNT_ID_ICI
+
+scraper:
+  source: 1xbet
+  websocket:
+    base_url: wss://ma-1xbet.com/games-frame/sockets/crash
+    params:
+      ref: 1
+      gr: 1529
+      whence: 55
+      fcountry: 125
+      appGuid: games-web-host-b2c-web-v3
+      lng: fr
+      v: '1.5'
+    reconnect_delay: 10
+    max_reconnect_attempts: 999999
+    ping_interval: 30
+
+database:
+  type: postgresql
+  postgresql:
+    host: localhost
+    port: 5432
+    database: crash_db
+    user: crash_user
+    password: crash_password_2025
+
+logging:
+  level: INFO
+  log_file: logs/crash_scraper.log
+  rotation: 100 MB
+  retention: 30 days

@@ -1,0 +1,32 @@
+# Requirements pour 1xBet Crash Monitoring
+# Scraping & Supervision en temps réel
+
+# Core
+numpy>=1.24.0,<2.0.0
+pandas>=2.0.0,<3.0.0
+
+# WebSocket & API
+websocket-client>=1.5.0
+websockets>=11.0
+requests>=2.31.0
+
+# Database
+sqlalchemy>=2.0.0,<3.0.0
+psycopg2-binary>=2.9.0
+
+# Configuration
+pyyaml>=6.0
+python-dotenv>=1.0.0
+
+# Logging
+loguru>=0.7.0
+
+# Dashboard Streamlit
+streamlit>=1.28.0
+plotly>=5.17.0
+
+# Token Management (optionnel)
+pyjwt>=2.8.0
+
+# Utils
+python-dateutil>=2.8.0

@@ -1,0 +1,82 @@
+# Dockerfile pour le Token Monitor
+FROM python:3.11-slim
+
+LABEL maintainer="1xBet Crash Monitoring"
+LABEL description="Service de surveillance de l'expiration du token"
+
+# Variables d'environnement
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    CHECK_INTERVAL=600
+
+# Répertoire de travail
+WORKDIR /app
+
+# Installer les dépendances
+RUN pip install --no-cache-dir pyyaml pyjwt
+
+# Créer le script de monitoring
+RUN echo '#!/usr/bin/env python3\n\
+import yaml\n\
+import jwt\n\
+import time\n\
+import os\n\
+from datetime import datetime\n\
+from pathlib import Path\n\
+\n\
+def check_token_expiration():\n\
+    """Vérifie l'\''expiration du token"\n\
+    config_path = Path("/app/config/config.yaml")\n\
+    \n\
+    if not config_path.exists():\n\
+        print("❌ Configuration non trouvée")\n\
+        return\n\
+    \n\
+    try:\n\
+        with open(config_path, "r", encoding="utf-8") as f:\n\
+            config = yaml.safe_load(f)\n\
+        \n\
+        token = config.get("authentication", {}).get("access_token")\n\
+        \n\
+        if not token or token == "VOTRE_TOKEN_ICI":\n\
+            print("⚠️  Token non configuré")\n\
+            return\n\
+        \n\
+        decoded = jwt.decode(token, options={"verify_signature": False})\n\
+        exp = decoded.get("exp")\n\
+        \n\
+        if exp:\n\
+            exp_time = datetime.fromtimestamp(exp)\n\
+            now = datetime.now()\n\
+            remaining = (exp_time - now).total_seconds() / 3600\n\
+            \n\
+            timestamp = now.strftime("%Y-%m-%d %H:%M:%S")\n\
+            \n\
+            if remaining < 0:\n\
+                print(f"[{timestamp}] 🔴 TOKEN EXPIRÉ depuis {abs(remaining):.1f}h")\n\
+            elif remaining < 1:\n\
+                print(f"[{timestamp}] ⚠️  TOKEN EXPIRE DANS {int(remaining * 60)} MINUTES")\n\
+            elif remaining < 4:\n\
+                print(f"[{timestamp}] 🟡 Token expire dans {remaining:.1f}h")\n\
+            else:\n\
+                print(f"[{timestamp}] ✅ Token valide ({remaining:.1f}h restantes)")\n\
+    \n\
+    except Exception as e:\n\
+        print(f"❌ Erreur: {e}")\n\
+\n\
+def main():\n\
+    interval = int(os.getenv("CHECK_INTERVAL", 600))\n\
+    print(f"🔍 Token Monitor démarré (vérification toutes les {interval}s)")\n\
+    \n\
+    while True:\n\
+        check_token_expiration()\n\
+        time.sleep(interval)\n\
+\n\
+if __name__ == "__main__":\n\
+    main()\n\
+' > /app/token_monitor.py && chmod +x /app/token_monitor.py
+
+# Lancer le monitor
+CMD ["python", "-u", "/app/token_monitor.py"]

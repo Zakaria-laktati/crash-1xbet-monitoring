@@ -1,0 +1,70 @@
+# Fichiers Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environnements virtuels
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# Data
+data/
+*.csv
+*.db
+*.sqlite
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Git
+.git/
+.gitignore
+
+# Documentation non essentielle
+README.md
+QUICKSTART.md
+*.md
+!DOCKER.md
+
+# Tests
+tests/
+test_*.py
+*_test.py
+
+# Fichiers temporaires
+tmp/
+temp/
+*.tmp
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Environnement
+.env
+.env.local
+.env.*.local
+
+# Docker
+docker-compose.override.yml
