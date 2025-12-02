@@ -94,9 +94,9 @@ Real-time monitoring system for 1xBet Crash game with interactive dashboard, Web
 
 ### Option 1: Docker (Recommended)
 
-#### 1. Clone the repository
+#### 1. clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/crash-1xbet-monitoring.git
+git clone https://github.com/Zakaria-laktati/crash-1xbet-monitoring.git
 cd crash-1xbet-monitoring
 ```
 
@@ -148,9 +148,9 @@ Open your browser: **http://localhost:8501**
 
 ### Option 2: Local Installation
 
-#### 1. Clone the repository
+#### 1. clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/crash-1xbet-monitoring.git
+git clone https://github.com/Zakaria-laktati/crash-1xbet-monitoring.git
 cd crash-1xbet-monitoring
 ```
 
@@ -459,10 +459,15 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 👤 Author
 
-Your Name - [@your_twitter](https://twitter.com/your_twitter)
+Zakaria Laktati
 
 Project Link: [https://github.com/YOUR_USERNAME/crash-1xbet-monitoring](https://github.com/YOUR_USERNAME/crash-1xbet-monitoring)
 
 ---
 
 ⭐ **If this project helped you, feel free to give it a star!** ⭐
+
+## Support
+If you find this project helpful, consider supporting the developer by [buying them a coffee](https://www.buymeacoffee.com/zakarialaktati)!
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Donate-yellow.svg)](https://www.buymeacoffee.com/zakarialaktati)
